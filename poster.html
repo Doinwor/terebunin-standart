@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Плакат — Теребунинский стандарт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f7f3e8;
+  --ink: #16161a;
+  --green: #2f6b4f;
+  --red: #c73a23;
+  --gold: #d9a441;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #ddd8cb;
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 12px;
+}
+
+/* ===== fixed A4 sheet (794×1123 px = 210×297 мм) ===== */
+.scaler {
+  width: 794px;
+  transform-origin: top center;
+}
+.poster {
+  width: 794px;
+  height: 1123px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 34px, rgba(0,0,0,.03) 34px 35px),
+    var(--paper);
+  border: 4px solid var(--ink);
+  box-shadow: 14px 14px 0 rgba(0,0,0,.18);
+  padding: 44px 52px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.poster::before {
+  content: "";
+  position: absolute;
+  top: -55px; right: -55px;
+  width: 180px; height: 180px;
+  background: var(--red);
+  transform: rotate(45deg);
+}
+
+/* ===== top line ===== */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 14px;
+  position: relative; z-index: 2;
+}
+.top .who { font-weight: 800; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; text-align: right; }
+.top .badge {
+  background: var(--ink); color: var(--paper);
+  padding: 8px 16px; font-weight: 800; font-size: 14px;
+  letter-spacing: .12em; text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+.logo {
+  width: 74px; height: 74px;
+  border-radius: 14px; overflow: hidden; flex-shrink: 0;
+  background: var(--green); border: 3px solid var(--ink);
+}
+.logo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== headline ===== */
+.kicker {
+  font-weight: 800; letter-spacing: .3em; text-transform: uppercase;
+  font-size: 14px; color: var(--green);
+  margin-bottom: 8px; position: relative; z-index: 2;
+}
+h1 {
+  font-size: 70px;
+  font-weight: 900; line-height: .98; letter-spacing: -0.04em;
+  text-transform: uppercase; position: relative; z-index: 2;
+  word-break: break-word;
+}
+h1 em {
+  font-style: normal; color: var(--red);
+  text-decoration: underline; text-decoration-thickness: 6px;
+  text-underline-offset: 8px;
+}
+.sub {
+  font-family: "Caveat", cursive;
+  font-size: 34px;
+  color: var(--green); margin-top: 12px; position: relative; z-index: 2;
+}
+
+/* ===== three shouts ===== */
+.shouts {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  position: relative; z-index: 2;
+}
+.shout {
+  border: 3px solid var(--ink);
+  background: #fff;
+  padding: 20px 14px;
+  text-align: center;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.shout:nth-child(2) { background: var(--green); color: #fff; transform: rotate(-1.5deg); }
+.shout:nth-child(3) { background: var(--gold); transform: rotate(1.5deg); }
+.shout b {
+  display: block;
+  font-size: 34px;
+  font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em;
+  line-height: 1; margin-bottom: 8px;
+}
+.shout span { font-size: 14px; font-weight: 600; line-height: 1.4; display: block; }
+
+/* ===== info strip ===== */
+.strip {
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink);
+  padding: 13px 0;
+  font-weight: 700; font-size: 15px;
+  text-transform: uppercase; letter-spacing: .03em;
+  position: relative; z-index: 2;
+}
+.strip i { font-style: normal; color: var(--red); }
+
+/* ===== bottom: QR + call ===== */
+.bottom {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 26px; align-items: center;
+  position: relative; z-index: 2;
+}
+.qr {
+  background: #fff; border: 3px solid var(--ink);
+  padding: 12px; width: 168px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.qr img { width: 100%; display: block; }
+.qr p {
+  text-align: center; font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-top: 8px; line-height: 1.3;
+}
+.call h2 {
+  font-size: 42px;
+  font-weight: 900; text-transform: uppercase;
+  line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 10px;
+}
+.call h2 i { font-style: normal; color: var(--red); }
+.call p { font-weight: 600; font-size: 16px; line-height: 1.5; margin-bottom: 14px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 20px; font-weight: 800; font-size: 15px; }
+.links a { color: var(--green); text-decoration: none; border-bottom: 3px solid var(--green); }
+
+/* ===== footer ===== */
+.foot {
+  padding-top: 14px;
+  border-top: 3px solid var(--ink);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em;
+  position: relative; z-index: 2;
+}
+.foot .warn { color: var(--red); }
+
+/* ===== star ===== */
+.star {
+  position: absolute; bottom: 20px; right: 24px;
+  width: 64px; height: 64px; background: var(--red);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  z-index: 2; opacity: .9;
+}
+
+/* ===== PRINT: one A4 page exactly ===== */
+@page { size: A4 portrait; margin: 0; }
+
+@media print {
+  html, body {
+    background: #fff;
+    padding: 0;
+    margin: 0;
+    display: block;
+    min-height: auto;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+  }
+  .scaler {
+    width: 794px;
+    height: auto !important;
+    transform: none !important;
+    margin: 0;
+  }
+  .poster {
+    width: 794px;
+    height: 1123px;
+    border-width: 3px;
+    box-shadow: none;
+    page-break-after: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="scaler" id="scaler">
+<div class="poster">
+
+  <div class="top">
+    <div class="logo">
+      <img src="assets/logo.png" alt="" onerror="this.style.display='none'">
+    </div>
+    <div class="who">ООО «Отмыв»<br>Санкт-Петербургский спиртзаводик</div>
+    <div class="badge">Скоро открытие!</div>
+  </div>
+
+  <div>
+    <p class="kicker">Торговая марка</p>
+    <h1>Теребунинский <em>стандарт</em></h1>
+    <p class="sub">Честный напиток из псковской глубинки — из яблок, которые бросают в мусор!</p>
+  </div>
+
+  <div class="shouts">
+    <div class="shout">
+      <b>Покупать!</b>
+      <span>Фруктовые дистилляты и настойки по цене ниже рынка на 15–20%</span>
+    </div>
+    <div class="shout">
+      <b>Работать!</b>
+      <span>Вакансии на новый завод: технолог, разнорабочие, водитель, продажи</span>
+    </div>
+  </div>
+
+  <div class="strip">
+    <span>Санкт-Петербург</span>
+    <i>★</i>
+    <span>Белый остров, 1У · 198184</span>
+    <i>★</i>
+    <span>Сырьё: дер. Теребуни</span>
+    <i>★</i>
+    <span>Легально · ФЗ-171 · 18+</span>
+  </div>
+
+  <div class="bottom">
+    <div class="qr">
+      <img src="assets/qr.png" alt="QR-код для перевода">
+      <p>Сканируй<br>и поддержи!</p>
+    </div>
+    <div class="call">
+      <h2>Нам нужен <i>каждый</i>!</h2>
+      <p>Покупай наш дистиллят, приходи работать или вкладывай рубль в дело — скоро весь Петербург будет пить Теребунинский стандарт!</p>
+      <div class="links">
+        <a href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019f7c2c-9675-741e-ae27-7e3fd50c1222" target="_blank" rel="noopener">Инвестировать →</a>
+        <a href="mailto:info@terebunin-standart.ru">Написать нам</a>
+        <a href="index.html">Сайт проекта</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>© 2026 ООО «Отмыв»</span>
+    <span class="warn">18+ · Вредит вашему здоровью</span>
+    <span>Бренд: «Теребунинский стандарт»</span>
+  </div>
+
+  <div class="star" aria-hidden="true"></div>
+</div>
+</div>
+
+<script>
+/* Масштабируем плакат под высоту экрана — целиком, без прокрутки */
+function fit() {
+  const s = document.getElementById("scaler");
+  const avail = window.innerHeight - 48;
+  const scale = Math.min(1, avail / 1123, (window.innerWidth - 24) / 794);
+  s.style.transform = "scale(" + scale + ")";
+  /* компенсируем место, которое занимаетscaled-элемент */
+  s.style.height = (1123 * scale) + "px";
+}
+fit();
+window.addEventListener("resize", fit);
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бизнес-план — Теребунинский стандарт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbfbf9;
+  --alt: #f2f2ee;
+  --card: #ffffff;
+  --line: #e6e5e0;
+  --accent: #2f6b4f;
+  --accent-dark: #245540;
+  --text: #16161a;
+  --dim: #6b6b6b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ===== progress + chrome ===== */
+.progress {
+  position: fixed; top: 0; left: 0; height: 4px;
+  background: var(--accent); width: 0; z-index: 50;
+  transition: width .4s ease;
+}
+.brand-chip {
+  position: fixed; top: 22px; left: 34px; z-index: 40;
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 14px;
+}
+.brand-chip img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; background: var(--accent); }
+.brand-chip .fallback {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--accent);
+  color: #fff; display: none; place-items: center; font-size: 13px;
+}
+.counter {
+  position: fixed; top: 26px; right: 34px; z-index: 40;
+  font-size: 14px; color: var(--dim); font-variant-numeric: tabular-nums;
+}
+.counter b { color: var(--text); }
+
+.nav-arrows {
+  position: fixed; bottom: 26px; right: 34px; z-index: 40;
+  display: flex; gap: 10px;
+}
+.nav-arrows button {
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--card);
+  font-size: 18px; cursor: pointer; color: var(--text);
+  transition: .2s;
+}
+.nav-arrows button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.hint {
+  position: fixed; bottom: 34px; left: 34px; z-index: 40;
+  font-size: 12.5px; color: var(--dim);
+}
+kbd {
+  border: 1px solid var(--line); border-bottom-width: 2px;
+  border-radius: 5px; padding: 1px 6px; background: var(--card);
+  font-family: inherit; font-size: 11.5px;
+}
+
+/* ===== slides ===== */
+.slide {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 90px 8vw 90px;
+  opacity: 0; visibility: hidden; transform: translateY(16px);
+  transition: opacity .45s ease, transform .45s ease, visibility .45s;
+}
+.slide.active { opacity: 1; visibility: visible; transform: none; }
+
+.inner { width: min(1150px, 100%); }
+
+.kicker {
+  font-size: 13px; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+}
+h2 {
+  font-size: clamp(30px, 4.4vw, 52px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.08; margin-bottom: 26px;
+}
+.columns { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+.columns--even { grid-template-columns: 1fr 1fr; }
+
+p.lead { font-size: clamp(16px, 1.6vw, 19px); color: var(--dim); line-height: 1.65; margin-bottom: 16px; }
+p.lead strong, li strong { color: var(--text); font-weight: 600; }
+
+ul.list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-top: 8px; }
+ul.list li {
+  position: relative; padding-left: 30px;
+  font-size: clamp(15px, 1.5vw, 17px); line-height: 1.5;
+}
+ul.list li::before {
+  content: "✓"; position: absolute; left: 0; top: 0;
+  color: var(--accent); font-weight: 700;
+}
+ul.list--minus li::before { content: "—"; color: #b3541e; }
+
+ol.flow { list-style: none; counter-reset: f; display: flex; flex-direction: column; gap: 11px; }
+ol.flow li {
+  counter-increment: f; display: flex; gap: 14px; align-items: baseline;
+  font-size: clamp(14.5px, 1.5vw, 16.5px);
+}
+ol.flow li::before {
+  content: counter(f);
+  flex: 0 0 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 600;
+  display: inline-grid; place-items: center; align-self: center;
+}
+
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 22px;
+}
+.card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.card p { font-size: 14px; color: var(--dim); line-height: 1.55; }
+.card .tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.card--photo { padding: 0; overflow: hidden; }
+.card--photo .ph { aspect-ratio: 4/3; background: var(--alt); }
+.card--photo .ph img { width: 100%; height: 100%; object-fit: cover; }
+.card--photo .body { padding: 16px 18px 20px; }
+
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.stat {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 20px;
+}
+.stat b { display: block; font-size: clamp(24px, 3vw, 34px); font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+.stat span { font-size: 13.5px; color: var(--dim); }
+
+.photo {
+  border-radius: 18px; overflow: hidden; border: 1px solid var(--line);
+  background: var(--alt);
+}
+.photo img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+.photo figcaption { font-size: 13px; color: var(--dim); padding: 10px 14px; background: var(--card); }
+
+.note {
+  margin-top: 22px; padding: 14px 18px;
+  border-left: 3px solid var(--accent); background: var(--card);
+  border-radius: 0 12px 12px 0; font-size: 14.5px; color: var(--dim);
+}
+.note strong { color: var(--text); }
+
+/* ===== title slide ===== */
+.title-slide { text-align: center; }
+.title-slide .logo-big {
+  width: clamp(110px, 16vw, 170px); height: clamp(110px, 16vw, 170px);
+  margin: 0 auto 30px; border-radius: 28px; overflow: hidden;
+  background: var(--accent); display: grid; place-items: center;
+  box-shadow: 0 24px 60px rgba(47,107,79,.25);
+}
+.title-slide .logo-big img { width: 100%; height: 100%; object-fit: cover; }
+.title-slide .logo-big .fallback { color: #fff; font-weight: 800; font-size: 42px; display: none; }
+.title-slide h1 {
+  font-size: clamp(40px, 7vw, 84px); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 18px;
+}
+.title-slide h1 span { color: var(--accent); }
+.title-slide .sub { font-size: clamp(16px, 2vw, 21px); color: var(--dim); margin-bottom: 8px; }
+.title-slide .meta {
+  margin-top: 34px; display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+}
+.title-slide .meta span {
+  border: 1px solid var(--line); background: var(--card);
+  padding: 9px 18px; border-radius: 999px; font-size: 14px;
+}
+.handwritten { font-family: "Caveat", cursive; color: var(--accent); font-size: clamp(22px, 2.6vw, 30px); }
+
+/* ===== money slide ===== */
+.money { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; }
+.qr-box {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 30px; text-align: center;
+}
+.qr-box img {
+  width: min(300px, 100%); border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px; background: #fff; margin-bottom: 16px;
+}
+.qr-box p { font-size: 14px; color: var(--dim); }
+.qr-box a {
+  display: inline-block; margin-top: 16px; padding: 14px 28px;
+  background: var(--accent); color: #fff; text-decoration: none;
+  border-radius: 10px; font-weight: 600; font-size: 15px;
+}
+.qr-box a:hover { background: var(--accent-dark); }
+
+/* ===== end slide ===== */
+.end-slide { text-align: center; }
+.end-slide h2 { margin-bottom: 18px; }
+.end-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+.end-links a {
+  color: var(--accent); text-decoration: none; font-size: 16px;
+  border-bottom: 1px dashed var(--accent);
+}
+
+@media (max-width: 900px) {
+  .slide { padding: 80px 6vw 100px; overflow-y: auto; align-items: flex-start; }
+  .columns, .columns--even, .money { grid-template-columns: 1fr; gap: 26px; }
+  .cards { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="brand-chip">
+  <img src="assets/logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+  <div class="fallback">ТС</div>
+  <span>Теребунинский стандарт</span>
+</div>
+
+<div class="counter"><b id="cur">1</b> / <span id="total">14</span></div>
+
+<!-- ================= SLIDE 1 ================= -->
+<section class="slide active">
+  <div class="inner title-slide">
+    <div class="logo-big">
+      <img src="assets/logo.png" alt="Логотип" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="fallback">ТС</span>
+    </div>
+    <p class="kicker">Бизнес-план · 2026</p>
+    <h1>Теребунинский <span>стандарт</span></h1>
+    <p class="sub">Производство фруктовых и ягодных дистиллятов в Санкт-Петербурге</p>
+    <div class="meta">
+      <span>ООО «Отмыв»</span>
+      <span>Санкт-Петербургский спиртзаводик</span>
+      <span>Сырьё: деревня Теребуни</span>
+      <span>Скоро открытие</span>
+    </div>
+    <p class="handwritten" style="margin-top:26px">Честный напиток из псковской глубинки</p>
+  </div>
+</section>
+
+<!-- ================= SLIDE 2 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">01 · Резюме проекта</p>
+    <h2>Суть проекта</h2>
+    <div class="columns">
+      <div>
+        <p class="lead">Производство и реализация <strong>легальной алкогольной продукции</strong> — фруктовых и ягодных дистиллятов — в Санкт-Петербурге.</p>
+        <ul class="list">
+          <li><strong>Сырьё:</strong> некондиционные, но свежие фрукты и овощи второго сорта напрямую у фермеров — деревня Теребуни, Псковская область</li>
+          <li><strong>Бренд:</strong> «Теребунинский стандарт» — узнаваемость, доверие, связь с местом происхождения</li>
+          <li><strong>Партнёр:</strong> кабак «Три кабана» — гарантированный канал сбыта на старте</li>
+        </ul>
+        <div class="note"><strong>Цель:</strong> занять нишу доступного локального алкоголя в СПб: поставки в «Три кабана», прямые продажи и опт для других заведений.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>300 км</b><span>от полей Теребуней до цеха</span></div>
+        <div class="stat"><b>−15…20%</b><span>к средней цене рынка</span></div>
+        <div class="stat"><b>3</b><span>канала сбыта с первого дня</span></div>
+        <div class="stat"><b>18+</b><span>легальная продажа, ФЗ-171</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 3 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">02 · Структура</p>
+    <h2>Юридическая и брендовая структура</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="tag">Юрлицо</span>
+        <h3>ООО «Отмыв»</h3>
+        <p>Владелец лицензий, производства и товарного знака. Работа в рамках ФЗ-171, ЕГАИС, «Честный ЗНАК», уплата акцизов.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Площадка</span>
+        <h3>Санкт-Петербургский спиртзаводик</h3>
+        <p>Коммерческое обозначение производственной площадки в Санкт-Петербурге.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Бренд</span>
+        <h3>«Теребунинский стандарт»</h3>
+        <p>Потребительский бренд, под которым продукция выходит на рынок.</p>
+      </div>
+    </div>
+    <div class="note"><strong>Маркировка каждой бутылки:</strong> «Произведено ООО "Отмыв" на Санкт-Петербургском спиртзаводике. Бренд: "Теребунинский стандарт"».</div>
+    <div class="note"><strong>Вывод на рынок:</strong> на этикетке акцент на бренде «Теребунинский стандарт», юридическое название — только в документах.</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 4 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">03 · Продукт</p>
+    <h2>Ассортиментная линейка</h2>
+    <div class="cards">
+      <div class="card card--photo">
+        <div class="ph"><img src="assets/product-classic.png" alt="Классика"></div>
+        <div class="body"><h3>«Классика»</h3><p>Яблочный дистиллят (кальвадос) и грушевый дистиллят. Крепость 40%.</p></div>
+      </div>
+      <div class="card card--photo">
+        <div class="ph"><img src="assets/product-terebun.png" alt="Теребунская"></div>
+        <div class="body"><h3>«Теребунская настойка»</h3><p>Ягодные настойки с натуральными соками: малина, калина, рябина.</p></div>
+      </div>
+      <div class="card card--photo">
+        <div class="ph"><img src="assets/product-kabani.png" alt="Три кабана"></div>
+        <div class="body"><h3>Линейка «Три кабана»</h3><p>Эксклюзивная продукция для партнёрского кабака + овощные/фруктовые спирты.</p></div>
+      </div>
+    </div>
+    <div class="note"><strong>Сырьё:</strong> яблоки, груши, ягоды, овощи второго сорта — мятые, нестандартные, но не гнилые. · <strong>Упаковка:</strong> стекло 0,5 / 0,7 / 1 л, этикетка «псковская глубинка — честный продукт».</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 5 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">04 · Рынок</p>
+    <h2>Рынок и конкуренция</h2>
+    <div class="columns columns--even">
+      <div>
+        <p class="lead"><strong>Кто наши клиенты</strong></p>
+        <ul class="list">
+          <li><strong>B2B:</strong> бары, рюмочные, кабаки, рестораны среднего и бюджетного сегмента</li>
+          <li><strong>B2C:</strong> покупатели, ищущие локальный, натуральный и доступный алкоголь</li>
+        </ul>
+        <div class="note"><strong>Легенда бренда:</strong> сырьё из Теребуней, ручной сбор, поддержка местных фермеров, борьба с пищевыми отходами.</div>
+      </div>
+      <div>
+        <p class="lead"><strong>Конкуренты и наше преимущество</strong></p>
+        <ul class="list list--minus">
+          <li><strong>Крупные заводы:</strong> дешёвая водка из ректификата — но без «истории»</li>
+          <li><strong>Крафтовые винокурни:</strong> качественно, но дорого</li>
+        </ul>
+        <div class="note"><strong>«Теребунинский стандарт»:</strong> легальность + низкая себестоимость (сырьё второго сорта) + локальная легенда + поддержка партнёрского кабака.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 6 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">05 · Сбыт</p>
+    <h2>Три канала продаж</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="tag">Якорный клиент</span>
+        <h3>Кабак «Три кабана»</h3>
+        <p>Регулярные поставки и эксклюзивная линейка. Даёт базовую загрузку производства и обратную связь.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Высокая маржа</span>
+        <h3>Прямые продажи B2C</h3>
+        <p>Фирменные точки, маркетплейсы (при наличии разрешений), фестивали, дегустации.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Масштаб</span>
+        <h3>Опт для заведений B2B</h3>
+        <p>Другие бары, рюмочные и рестораны Санкт-Петербурга. Снижает зависимость от одного партнёра.</p>
+      </div>
+    </div>
+    <div class="note"><strong>Логика:</strong> «Три кабана» — база, прямые продажи — маржа, опт — объёмы и устойчивость.</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 7 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">06 · Производство</p>
+    <div class="columns">
+      <div>
+        <h2>Производство и логистика</h2>
+        <ol class="flow">
+          <li>Осенью — сбор и закупка сырья в Теребунях</li>
+          <li>Транспортировка в Санкт-Петербург (~300 км)</li>
+          <li>Мойка, сортировка, измельчение, прессование</li>
+          <li>Брожение (14–30 дней)</li>
+          <li>Дистилляция в медных аламбиках</li>
+          <li>Выдержка — для отдельных сортов</li>
+          <li>Розлив, маркировка (ЕГАИС, «Честный ЗНАК»), отгрузка</li>
+        </ol>
+        <div class="note"><strong>Оборудование:</strong> дробилка, пресс, бродильные ёмкости, дистиллятор, фильтры, линия розлива. · <strong>Сезонность:</strong> часть сырья замораживается для работы зимой и весной.</div>
+      </div>
+      <figure class="photo">
+        <img src="assets/factory.png" alt="Наш цех">
+        <figcaption>Производственная площадка: Санкт-Петербург, Белый остров, 1У</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 8 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">07 · Маркетинг</p>
+    <h2>Маркетинг и бренд</h2>
+    <div class="columns">
+      <div>
+        <ul class="list">
+          <li><strong>Позиционирование:</strong> «Теребунинский стандарт — честный напиток из псковской глубинки»</li>
+          <li><strong>Продвижение через «Три кабана»:</strong> совместные дегустации, коктейли, спецпредложения</li>
+          <li><strong>Прямой маркетинг:</strong> соцсети, истории о поездках в Теребуни, участие в ярмарках</li>
+          <li><strong>Цена:</strong> ниже среднерыночной на 15–20% за счёт дешёвого сырья</li>
+        </ul>
+        <div class="note"><strong>Фишка бренда:</strong> потребитель покупает не «второй сорт», а историю — честный продукт, который спасает фрукты от мусора.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>15–20%</b><span>ниже средней цены рынка</span></div>
+        <div class="stat"><b>2 сорта</b><span>сырьё — наша себестоимость</span></div>
+        <div class="stat"><bVK/TG</b><span>истории из Теребуней</span></div>
+        <div class="stat"><b>Дегустации</b><span>в партнёрском кабаке</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 9 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">08 · Финансы</p>
+    <h2>Финансовая модель — принципы</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="tag">Старт</span>
+        <h3>Стартовые затраты</h3>
+        <p>Аренда цеха, оборудование, лицензии, первая партия сырья, транспорт, маркетинг.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Ежемесячно</span>
+        <h3>Постоянные расходы</h3>
+        <p>Аренда, коммунальные, зарплаты, налоги, акцизы, логистика.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Переменные</span>
+        <h3>Сырьё и тара</h3>
+        <p>Сырьё, тара, этикетки, бензин — зависят от объёма производства.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Доход</span>
+        <h3>Три источника выручки</h3>
+        <p>Опт для «Трёх кабанов», прямые продажи, опт для других заведений.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Безубыток</span>
+        <h3>Точка безубыточности</h3>
+        <p>Объём поставок в «Три кабана» + минимальные прямые продажи.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Горизонт</span>
+        <h3>Окупаемость 1,5–3 года</h3>
+        <p>При стабильном сбыте по всем трём каналам.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 10 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">09 · Риски</p>
+    <h2>Анализ рисков и решения</h2>
+    <div class="columns columns--even">
+      <div>
+        <ul class="list list--minus">
+          <li><strong>Зависимость от «Трёх кабанов»</strong> — развиваем прямые продажи и других B2B-клиентов</li>
+          <li><strong>Сезонность сырья</strong> — заморозка, концентраты, зерновые дистилляты в межсезонье</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="list list--minus">
+          <li><strong>Регуляторные проверки</strong> — строгий учёт, ЕГАИС, качественное сырьё, юридическая поддержка</li>
+          <li><strong>Логистика и порча сырья</strong> — рефрижераторы, переработка в течение 24 часов</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note"><strong>Репутационный риск названия «Отмыв»:</strong> выводим на рынок бренд «Теребунинский стандарт», юридическое название — только в документах.</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 11 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">Инвестиции</p>
+    <h2>Поддержите проект</h2>
+    <div class="money">
+      <div class="qr-box">
+        <img src="assets/qr.png" alt="QR-код для перевода">
+        <p>Скан QR-кода — перевод по СБП без комиссии.<br>Деньги идут на запуск производства.</p>
+        <a href="https://finance.ozon.ru/apps/sbp/ozonbankpay/019f7c2c-9675-741e-ae27-7e3fd50c1222" target="_blank" rel="noopener">Инвестировать через СБП</a>
+      </div>
+      <div>
+        <p class="lead">Мы собираем средства на запуск завода: <strong>оборудование, первую партию сырья из Теребуней и оформление документов.</strong></p>
+        <ul class="list">
+          <li>Оплата по СБП — без комиссии, деньги приходят сразу</li>
+          <li>Ежемесячный отчёт о расходовании средств подписчикам</li>
+          <li>Вкладчикам — дегустация первой партии и имена на стене завода</li>
+        </ul>
+        <p class="handwritten" style="margin-top:22px">Каждый вклад — шаг к открытию!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 12 ================= -->
+<section class="slide">
+  <div class="inner">
+    <p class="kicker">10 · Вывод</p>
+    <h2>Почему проект устойчив</h2>
+    <div class="columns">
+      <div>
+        <ul class="list">
+          <li>Юридическое лицо — <strong>ООО «Отмыв»</strong></li>
+          <li>Производственная площадка — <strong>Санкт-Петербургский спиртзаводик</strong></li>
+          <li>Потребительский бренд — <strong>«Теребунинский стандарт»</strong></li>
+          <li>Дешёвое сырьё из <strong>деревни Теребуни</strong></li>
+          <li>Гарантированный сбыт через <strong>кабак «Три кабана»</strong></li>
+          <li>Прямые продажи и оптовые поставки — <strong>3 канала дохода</strong></li>
+        </ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>Легально</b><span>ФЗ-171, ЕГАИС, «Честный ЗНАК»</span></div>
+        <div class="stat"><b>Дёшево</b><span>сырьё второго сорта напрямую</span></div>
+        <div class="stat"><b>Локально</b><span>легенда псковской глубинки</span></div>
+        <div class="stat"><b>Масштаб</b><span>потенциал роста по всему СПб</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Структура проекта</strong> делает его устойчивым на старте и даёт потенциал для масштабирования в Санкт-Петербурге.</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 13 ================= -->
+<section class="slide">
+  <div class="inner title-slide">
+    <p class="kicker">Гимн завода</p>
+    <h2 style="max-width:800px;margin-inline:auto">Да здравствует Теребунинский стандарт!</h2>
+    <p class="handwritten" style="max-width:720px;margin:0 auto;line-height:1.5">
+      Мы скупаем мятые яблоки с грядки,<br>
+      Дёшево, честно, без лишней приглядки.<br>
+      Из них дистиллят — родной и живой,<br>
+      Пусть конкуренты кричат: «Он чужой!»
+    </p>
+    <p class="handwritten" style="max-width:720px;margin:18px auto 0;line-height:1.5">
+      Мы легальны, натуральны — в этом наш путь,<br>
+      Кто с нами — тому посчастливится тут!<br>
+      Из Теребуней нам не нужно стыдиться —<br>
+      Весь Петербург будет нами гордиться!
+    </p>
+  </div>
+</section>
+
+<!-- ================= SLIDE 14 ================= -->
+<section class="slide">
+  <div class="inner end-slide">
+    <div class="logo-big" style="width:120px;height:120px;margin:0 auto 26px;border-radius:24px;overflow:hidden;background:var(--accent);display:grid;place-items:center;box-shadow:0 20px 50px rgba(47,107,79,.25)">
+      <img src="assets/logo.png" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">
+    </div>
+    <p class="kicker">Спасибо за внимание</p>
+    <h2>Скоро откроемся в Санкт-Петербурге</h2>
+    <p class="lead" style="max-width:640px;margin:0 auto">Санкт-Петербург, Белый остров, 1У · индекс 198184<br>Кировский район, муниципальный округ Морские ворота</p>
+    <div class="end-links">
+      <a href="https://yandex.ru/maps/?text=Санкт-Петербург, Белый остров, 1У" target="_blank" rel="noopener">Яндекс.Карты</a>
+      <a href="mailto:info@terebunin-standart.ru">info@terebunin-standart.ru</a>
+      <a href="index.html">Сайт проекта</a>
+    </div>
+    <p class="handwritten" style="margin-top:24px">Теребунинский стандарт — честный напиток из глубинки</p>
+  </div>
+</section>
+
+<!-- ===== controls ===== -->
+<div class="hint"><kbd>←</kbd> <kbd>→</kbd> или <kbd>Пробел</kbd> — листать · <kbd>F</kbd> — во весь экран</div>
+<div class="nav-arrows">
+  <button id="prev" aria-label="Назад">←</button>
+  <button id="next" aria-label="Вперёд">→</button>
+</div>
+
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let i = 0;
+document.getElementById("total").textContent = slides.length;
+
+function show(n) {
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach((s, k) => s.classList.toggle("active", k === i));
+  document.getElementById("cur").textContent = i + 1;
+  document.getElementById("progress").style.width = ((i + 1) / slides.length * 100) + "%";
+}
+show(0);
+
+document.getElementById("next").onclick = () => show(i + 1);
+document.getElementById("prev").onclick = () => show(i - 1);
+
+document.addEventListener("keydown", (e) => {
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); show(i + 1); }
+  if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(i - 1); }
+  if (e.key === "Home") show(0);
+  if (e.key === "End") show(slides.length - 1);
+  if (e.key.toLowerCase() === "f") {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  }
+});
+
+let x0 = null;
+document.addEventListener("touchstart", e => x0 = e.touches[0].clientX, {passive:true});
+document.addEventListener("touchend", e => {
+  if (x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 60) show(dx < 0 ? i + 1 : i - 1);
+  x0 = null;
+}, {passive:true});
+</script>
+</body>
+</html>
