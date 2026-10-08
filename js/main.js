@@ -52,10 +52,21 @@ window.addEventListener("scroll", () => {
 const burger = document.getElementById("burger");
 const nav = document.getElementById("nav");
 burger.addEventListener("click", () => {
-  nav.classList.toggle("open");
+  const open = nav.classList.toggle("open");
+  document.body.classList.toggle("menu-open", open);
 });
 nav.addEventListener("click", (e) => {
-  if (e.target.classList.contains("nav__link")) nav.classList.remove("open");
+  if (e.target.classList.contains("nav__link")) {
+    nav.classList.remove("open");
+    document.body.classList.remove("menu-open");
+  }
+});
+/* закрытие меню тапом вне его */
+document.addEventListener("click", (e) => {
+  if (nav.classList.contains("open") && !nav.contains(e.target) && !burger.contains(e.target)) {
+    nav.classList.remove("open");
+    document.body.classList.remove("menu-open");
+  }
 });
 
 /* --- Reveal on scroll --- */
