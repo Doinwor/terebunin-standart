@@ -269,7 +269,7 @@
 
           <div class="location__actions">
             <a class="btn btn--primary"
-               href="https://yandex.ru/maps/?text=Санкт-Петербург, Белый остров, 1У"
+               href="https://yandex.ru/maps/?um=constructor%3Ad539a5f8fa84b9b4b4808024e30cfc1ed5c1e0025e03d33a2b8170673e5a97eb&source=constructorLink"
                target="_blank" rel="noopener">
               Открыть на Яндекс.Картах
             </a>
@@ -282,10 +282,10 @@
         </div>
 
         <div class="location__map reveal">
-          <div class="photo-frame photo-frame--map">
-            <img src="assets/map.jpg" alt="Карта — Белый остров, 1У" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('photo-frame--empty');this.style.display='none'">
-            <span class="photo-frame__placeholder">Карта<br><small>Белый остров, 1У</small></span>
-          </div>
+          <div class="map-embed" id="map-embed"></div>
+          <script type="text/javascript" charset="utf-8" async
+            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ad539a5f8fa84b9b4b4808024e30cfc1ed5c1e0025e03d33a2b8170673e5a97eb&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true">
+          </script>
         </div>
       </div>
     </div>
